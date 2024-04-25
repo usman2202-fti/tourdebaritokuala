@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\data_rb;
-use App\Models\data_mtb;
-use App\Models\data_admin;
+use App\Models\rb;
+use App\Models\mtb;
+use App\Models\user;
 use Session;
 use Alert;
 
@@ -30,7 +30,7 @@ class homeController extends Controller
 
     public function register_save_rb(Request $request)
     {
-        $ceknik = data_rb::where('no_ktp',$request->no_ktp)->count();
+        $ceknik = rb::where('no_ktp',$request->no_ktp)->count();
         if($ceknik == 0){
             if ($request->file('gbr')->getSize() <= 4000000) {
                 $gbr =$request->file('gbr');
@@ -40,7 +40,7 @@ class homeController extends Controller
                 { $nama_asuransi = time()."_".$asuransi->getClientOriginalName(); $asuransi->move($tujuan_upload,$nama_asuransi);}
                 $nama_gbr = time()."_".$gbr->getClientOriginalName(); $gbr->move($tujuan_upload,$nama_gbr);
                 
-                 data_rb::create([
+                 rb::create([
                     'no_ktp' => $request->no_ktp,
                     'uci_id' => $request->uci_id,
                     'nama' => $request->nama,
@@ -85,7 +85,7 @@ class homeController extends Controller
 
     public function register_save_mtb(Request $request)
     {
-         data_mtb::create([
+         mtb::create([
             'no_ktp' => $request->no_ktp,
             'nama' => $request->nama,
             'tanggal_lahir' => $request->tanggal_lahir,
@@ -117,22 +117,22 @@ class homeController extends Controller
 
     public function peserta_index()
     {
-        $total_data_mtb = data_mtb::latest()->count();
-        $total_data_rb = data_rb::latest()->count();
-        $total = $total_data_mtb+$total_data_rb;
+        $total_mtb = mtb::latest()->count();
+        $total_rb = rb::latest()->count();
+        $total = $total_mtb+$total_rb;
         return view('home/peserta/index',compact('total'));
     }
 
     public function peserta_rb()
     {
-        $total_data_rb = data_rb::latest();
-        return view('home/peserta/rb',compact('total_data_rb'));
+        $total_rb = rb::latest();
+        return view('home/peserta/rb',compact('total_rb'));
     }
 
     public function peserta_mtb()
     {
-        $total_data_mtb = data_mtb::latest();
-        return view('home/peserta/mtb',compact('total_data_mtb'));
+        $total_mtb = mtb::latest();
+        return view('home/peserta/mtb',compact('total_mtb'));
     }
 
     public function info()
@@ -155,7 +155,7 @@ class homeController extends Controller
     public function login_aksi(Request $request)
     {
         $cek = array('username'=>$request->input('username'),'password'=>sha1($request->input('password')));
-        $cek_hasil = data_admin::where($cek)->count();
+        $cek_hasil = user::where($cek)->count();
         if($cek_hasil == null){
             Session::flush();
             Alert::error('ops!',"Username Atau Password Anda Salah");

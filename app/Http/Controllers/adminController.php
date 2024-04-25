@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\data_rb;
-use App\Models\data_mtb;
+use App\Models\rb;
+use App\Models\mtb;
 use Alert;
 
 class adminController extends Controller
@@ -46,8 +46,8 @@ class adminController extends Controller
                 break;
         }
 
-        $data_rb = data_rb::where('kategori', $kategori)->orderByRaw('no_peserta DESC');
-		$data = array('no'    => 1,	'judul' => $judul,'query' => $data_rb,   );        
+        $rb = rb::where('kategori', $kategori)->orderByRaw('no_peserta DESC');
+		$data = array('no'    => 1,	'judul' => $judul,'query' => $rb,   );        
         return view('admin/peserta_rb',$data);
     }
 
@@ -59,16 +59,17 @@ class adminController extends Controller
 
     public function register_save_rb(Request $request)
     {
-        $ceknik = data_rb::where('no_ktp',$request->no_ktp)->count();
+        $ceknik = rb::where('no_ktp',$request->no_ktp)->count();
         if($ceknik == 0){
             if ($request->file('gbr')->getSize() <= 4000000) {
                 $gbr =$request->file('gbr');
                 $asuransi =$request->file('asuransi');
+                $tujuan_upload = 'upload';
                 if($asuransi == ''){ $nama_asuransi='';} else
                 { $nama_asuransi = time()."_".$asuransi->getClientOriginalName(); $asuransi->move($tujuan_upload,$nama_asuransi);}
                 $nama_gbr = time()."_".$gbr->getClientOriginalName(); $gbr->move($tujuan_upload,$nama_gbr);
                 
-                 data_rb::create([
+                 rb::create([
                     'no_ktp' => $request->no_ktp,
                     'uci_id' => $request->uci_id,
                     'nama' => $request->nama,
@@ -82,7 +83,7 @@ class adminController extends Controller
                     'asuransi' => $nama_asuransi
                 ]);
                 Alert::success('Hore!', 'Data berhasil disimpan');
-                return redirect('register_success');
+                return redirect()->route('admin/peserta_rb/', $request->segmen);
             } else {
                 echo "<script>
                     alert('Ukuran file gambar/foto ktp maksimal 4 MB');
@@ -99,7 +100,7 @@ class adminController extends Controller
     
     public function edit_rb($file)
     {
-        $query = data_rb::where('id',$file);
+        $query = rb::where('id',$file);
         $data = array(
             'query'  => $query,
             'judul'  => 'Edit Peserta Road Bike',
@@ -111,7 +112,7 @@ class adminController extends Controller
     {
         // dd($request);
         $file =  $request->id;
-        $query = data_rb::where('id',$file);
+        $query = rb::where('id',$file);
         $query->update([
             'no_ktp' => $request->no_ktp,
             'uci_id' => $request->uci_id,
@@ -129,7 +130,7 @@ class adminController extends Controller
 
     public function hapus_rb($file)
     {
-        data_rb::where('id', $file)->delete();
+        rb::where('id', $file)->delete();
         toast('Data berhasil dihapus','success');
         return redirect()->back();
     }
