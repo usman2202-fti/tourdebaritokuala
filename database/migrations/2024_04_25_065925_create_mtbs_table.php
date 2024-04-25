@@ -15,6 +15,13 @@ return new class extends Migration
     {
         Schema::create('mtbs', function (Blueprint $table) {
             $table->id();
+            $table->string('no_ktp');
+            $table->string('nama');
+            $table->date('tanggal_lahir');
+            $table->text('alamat');
+            $table->string('telpon');
+            $table->string('kategori');
+            $table->string('klub');
             $table->timestamps();
         });
     }
