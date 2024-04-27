@@ -64,8 +64,8 @@
                         <td><?php echo $key->alamat ?></td>
                         <td><?php echo $key->telpon ?></td>
                         <td><?php echo $key->klub ?></td>
-                        <td><a href="{{ asset('asset') }}<?= 'upload/'.$key->foto_ktp ?>" target="_blank"><img src="{{ asset('asset') }}<?= 'upload/'.$key->foto_ktp ?>" alt="" width="50px"></a></td>
-                        <td><a href="{{ asset('asset') }}<?= 'upload/'.$key->asuransi ?>" target="_blank"><img src="{{ asset('asset') }}<?= 'upload/'.$key->asuransi ?>" alt="" width="50px"></a></td>
+                        <td><a href="{{ asset('upload/'.$key->foto_ktp) }}" target="_blank"><img src="{{ asset('upload/'.$key->foto_ktp) }}" alt="" width="50px"></a></td>
+                        <td><a href="{{ asset('upload/'.$key->asuransi) }}" target="_blank"><img src="{{ asset('upload/'.$key->asuransi) }}" alt="" width="50px"></a></td>
                         <td>
                         <a href="{{ route('admin/edit_rb', $key->id )}}" class="btn btn-success">Edit</a>
                             <a href="{{ route('admin/hapus_rb',  $key->id ) }}" class="btn btn-danger" onclick="return confirm('Hapus Data <?php echo $key->nama ?>?')">Hapus</a>

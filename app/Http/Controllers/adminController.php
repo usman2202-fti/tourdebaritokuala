@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\rb;
-use App\Models\mtb;
 use Alert;
+use App\Models\rb;
+use File;
+use Illuminate\Http\Request;
 
 class adminController extends Controller
 {
@@ -130,7 +130,9 @@ class adminController extends Controller
 
     public function hapus_rb($file)
     {
-        rb::where('id', $file)->delete();
+        $query = rb::where('id',$file)->first();
+        File::delete('upload/' . $query->foto_ktp);
+        rb::where('id',$file)->delete();
         toast('Data berhasil dihapus','success');
         return redirect()->back();
     }

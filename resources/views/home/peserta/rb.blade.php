@@ -22,7 +22,8 @@
 <br><br><br><br>
 <div class="row">
     <div class="col-md-12">
-     <h3>&nbsp;&nbsp;<?php echo $total_data_rb->count() ?> Orang</h3>    
+     <h3>&nbsp;&nbsp;
+        {{ $total_rb->count() ?? '0' }} Orang</h3>    
  </div>
 </div>
 <hr>
@@ -59,7 +60,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php $no = 0; foreach ($total_data_rb->get() as $key): ?>
+                <?php $no = 0; foreach ($total_rb->get() as $key): ?>
                 <?php if ($i == '1'): ?>
                     <?php if ($key->kategori == 'Men Youth'): ?>
                         <tr>

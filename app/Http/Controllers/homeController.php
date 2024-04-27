@@ -48,7 +48,7 @@ class homeController extends Controller
                     'alamat' => $request->alamat,
                     'telpon' => $request->telpon,
                     'kategori' => $request->kategori,
-                    'no_peserta' => $request->no_peserta,
+                    'no_peserta' => '',
                     'klub' => $request->klub,
                     'foto_ktp' => $nama_gbr,
                     'asuransi' => $nama_asuransi

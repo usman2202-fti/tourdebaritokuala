@@ -69,12 +69,7 @@
                   <input type="text" class="form-control" name="telpon" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
                 </td>
               </tr>
-              <tr>
-                <td align="right" style="padding: 2px"><h4>No Peserta</h4></td>
-                <td class="col-md-10" style="padding: 2px">
-                  <input type="text" class="form-control" name="no_peserta" onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
-                </td>
-              </tr>
+              
               <tr>
                 <td align="right" style="padding: 2px"><h4>Klub</h4></td>
                 <td class="col-md-10" style="padding: 2px"><input class="form-control" name="klub"></td>
