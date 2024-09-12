@@ -155,7 +155,9 @@ class homeController extends Controller
     public function login_aksi(Request $request)
     {
         $cek = array('username'=>$request->input('username'),'password'=>sha1($request->input('password')));
-        $cek_hasil = user::where($cek)->count();
+        $cek_hasil = user::where($cek)->get();
+        
+        // dd($cek_hasil);
         if($cek_hasil == null){
             Session::flush();
             Alert::error('ops!',"Username Atau Password Anda Salah");
